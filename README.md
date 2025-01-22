@@ -10,3 +10,5 @@ Ultimate windows setup, Inspired by omakub, we came to help you make your setup 
 
 * Git
 * Winget
+
+![uws](./uws.jpg)

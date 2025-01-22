@@ -1,4 +1,20 @@
-Write-Host "Welcome to the Ultimate Windows Setup (UwS)!"
+function Display-AsciiArt {
+    $asciiArt = @'
+/$$   /$$                /$$$$$$ 
+| $$  | $$               /$$__  $$
+| $$  | $$ /$$  /$$  /$$| $$  \__/
+| $$  | $$| $$ | $$ | $$|  $$$$$$ 
+| $$  | $$| $$ | $$ | $$ \____  $$
+| $$  | $$| $$ | $$ | $$ /$$  \ $$
+|  $$$$$$/|  $$$$$/$$$$/|  $$$$$$/
+ \______/  \_____/\___/  \______/
+'@
+    Write-Host ""
+    Write-Host "$asciiArt" -ForegroundColor Cyan
+    Write-Host "Welcome to the Ultimate Windows Setup (UwS)!" -ForegroundColor Green
+    Write-Host ""
+}
+
 
 function Show-Progress {
     param (
@@ -115,9 +131,9 @@ function Install-Neovim {
     }
 }
 
-# Main Execution
 try {
     . .\oh-my-posh.ps1
+    Display-AsciiArt
     Install-Win11Debloat
     Install-Terminal
     Install-OhMyPoshThemes
