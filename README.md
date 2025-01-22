@@ -5,3 +5,8 @@
 ![GitHub License](https://img.shields.io/github/license/BrunoCiccarino/UwS?style=for-the-badge&color=purple)
 
 Ultimate windows setup, Inspired by omakub, we came to help you make your setup easier on Windows, with just one command, install terminals, debloat Windows, install oh my posh and much more.
+
+## Requirements
+
+* Git
+* Winget

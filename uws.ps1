@@ -10,7 +10,7 @@ function Show-Progress {
 }
 
 function Install-Win11Debloat {
-    Write-Host "Do you want to perform a Windows debloat? (yes/no): " -NoNewline
+    Write-Host "❔ Do you want to perform a Windows debloat? (yes/no): " -NoNewline
     $response = Read-Host
     if ($response -eq "yes") {
         Show-Progress -Activity "Downloading Win11Debloat" -PercentComplete 10
@@ -37,7 +37,7 @@ function Install-Win11Debloat {
 }
 
 function Install-Terminal {
-    Write-Host "Which terminal do you want to install? (windows-terminal/alacritty/wezterm): " -NoNewline
+    Write-Host "❔ Which terminal do you want to install? (windows-terminal/alacritty/wezterm): " -NoNewline
     $terminalChoice = Read-Host
 
     if ($terminalChoice -eq "windows-terminal") {
