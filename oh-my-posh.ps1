@@ -4,6 +4,7 @@ function Configure-OhMyPoshTheme {
     )
     $themesPath = "$env:LOCALAPPDATA\Programs\oh-my-posh\themes"
     $themeFile = Join-Path -Path $themesPath -ChildPath "$ThemeName.omp.json"
+
     if (-Not (Test-Path $themeFile)) {
         Write-Host "Error: Theme $ThemeName not found in $themesPath. Please ensure the theme is available."
         return
@@ -21,18 +22,28 @@ function Configure-OhMyPoshTheme {
 function Install-OhMyPoshThemes {
     Show-Progress -Activity "Installing OhMyPosh" -PercentComplete 20
     winget install --id JanDeDobbeleer.OhMyPosh -e
-    New-Item -ItemType Directory -Path "$env:LOCALAPPDATA\Programs\oh-my-posh\themes" -Force
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/neko-night/oh-my-posh/main/themes.zip" -OutFile "$env:TEMP\themes.zip"
-    Expand-Archive "$env:TEMP\themes.zip" -DestinationPath "$env:LOCALAPPDATA\Programs\oh-my-posh\themes"
-    Show-Progress -Activity "Cloned OhMyPosh themes" -PercentComplete 50
 
-    Write-Host "Which OhMyPosh theme do you want to use? (nekonight/nekonight_moon): " -NoNewline
+    $themesPath = "$env:LOCALAPPDATA\Programs\oh-my-posh\themes"
+    New-Item -ItemType Directory -Path $themesPath -Force
+
+    $themeUrls = @{
+        "nekonight"       = "https://raw.githubusercontent.com/neko-night/oh-my-posh/refs/heads/main/nekonight.omp.json"
+        "nekonight_moon"  = "https://raw.githubusercontent.com/neko-night/oh-my-posh/refs/heads/main/nekonight_moon.omp.json"
+        "dracula"         = "https://raw.githubusercontent.com/dracula/oh-my-posh/refs/heads/master/dracula.omp.json"
+    }
+
+    foreach ($themeName in $themeUrls.Keys) {
+        $themeUrl = $themeUrls[$themeName]
+        $themeFilePath = Join-Path -Path $themesPath -ChildPath "$themeName.omp.json"
+        Invoke-WebRequest -Uri $themeUrl -OutFile $themeFilePath
+    }
+    Show-Progress -Activity "Downloaded OhMyPosh themes" -PercentComplete 50
+
+    Write-Host "Which OhMyPosh theme do you want to use? (nekonight/nekonight_moon/dracula): " -NoNewline
     $themeChoice = Read-Host
 
-    if ($themeChoice -eq "nekonight") {
-        Configure-OhMyPoshTheme -ThemeName "nekonight"
-    } elseif ($themeChoice -eq "nekonight_moon") {
-        Configure-OhMyPoshTheme -ThemeName "nekonight_moon"
+    if ($themeUrls.ContainsKey($themeChoice)) {
+        Configure-OhMyPoshTheme -ThemeName $themeChoice
     } else {
         Write-Host "Invalid choice. Defaulting to nekonight."
         Configure-OhMyPoshTheme -ThemeName "nekonight"
