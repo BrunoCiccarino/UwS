@@ -85,8 +85,8 @@ function Install-Terminal {
             "wezterm" {
                 Show-Progress -Activity "Installing WezTerm" -PercentComplete 30
                 winget install --id WezWezTerm -e
-                if (Test-Path "configs\wezterm\wezterm.lua") {
-                    Copy-Item -Path "configs\wezterm\wezterm.lua" -Destination "$env:USERPROFILE\.wezterm.lua" -Force
+                if (Test-Path "configs\wezterm\.wezterm.lua") {
+                    Copy-Item -Path "configs\wezterm\.wezterm.lua" -Destination "$env:USERPROFILE\.wezterm.lua" -Force
                     Show-Progress -Activity "Configured WezTerm" -PercentComplete 100
                 } else {
                     Write-Host "❌ Config file for WezTerm not found."

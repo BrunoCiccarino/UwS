@@ -15,8 +15,14 @@ function Configure-OhMyPoshTheme {
     if (-Not (Test-Path $profilePath)) {
         New-Item -ItemType File -Path $profilePath -Force
     }
-    "oh-my-posh init pwsh --config $themeFile | Invoke-Expression" | Out-File -FilePath $profilePath -Append -Force
+
+    $themeCommand = "& `"$env:LOCALAPPDATA\Programs\oh-my-posh\bin\oh-my-posh.exe`" init pwsh --config `"$themeFile`" | Invoke-Expression"
+    Add-Content -Path $profilePath -Value $themeCommand
+
     Show-Progress -Activity "OhMyPosh theme $ThemeName configuration completed" -PercentComplete 100
+
+    Start-Process -FilePath "pwsh" -ArgumentList "-NoExit" -WindowStyle Normal
+    Stop-Process -Id $PID
 }
 
 function Install-OhMyPoshThemes {
